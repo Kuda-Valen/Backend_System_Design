@@ -41,9 +41,6 @@ class LCLoadBalancer:
         # Then we print a confirmation message that
         print(f"[GATEWAY]: Registered horizontal node: {server.name}")
 
-    def get_least_conn_server(self) -> Server:
-        ...
-
     def route_request(self, req_id: str) -> dict:
         """ To handle a request using least connections we will need to first 
             find a healthy server with least current connections """
