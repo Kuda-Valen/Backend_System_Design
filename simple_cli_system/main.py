@@ -6,14 +6,14 @@ from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from pydantic import BaseModel
 import datetime
 
-DATABASE_URL = "postgresql://postgres:Valentine@localhost:5432/MentalMath_db"
+DATABASE_URL = "postgresql://postgres:Valentine@localhost:5433/MentalMath_db"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 class User(Base):
-    --tablename__ = "users"
+    __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False)
@@ -49,6 +49,6 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(db_user)
     return db_user
 
-@app.get("/users/", response_model=List[UserResponse])
+@app.get("/users/", response_model=list[UserResponse])
 def read_users(db: Session = Depends(get_db)):
     return db.query(User).all()
